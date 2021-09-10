@@ -6,9 +6,9 @@ include make-core.mk
 .PHONY: conf conf-clean conf-install
 .PHONY: net   net-clean  net-install
 
-all: conf net
-clean: conf-clean net-clean
-install: conf-install net-install
+all:     conf         net         sys
+clean:   conf-clean   net-clean   sys-clean
+install: conf-install net-install sys-install
 
 conf:
 	make -C conf
