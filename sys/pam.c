@@ -1,7 +1,7 @@
 /*
- * PAM login helper
+ * Colibri PAM login helper
  *
- * Copyright (c) 2018 Alexei A. Smekalkine <ikle@ikle.ru>
+ * Copyright (c) 2018-2021 Alexei A. Smekalkine <ikle@ikle.ru>
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "pam.h"
+#include <colibri/sys/pam.h>
 
 static int login_cb (int num_msg, const struct pam_message **msg,
 		     struct pam_response **resp, void *appdata_ptr)
