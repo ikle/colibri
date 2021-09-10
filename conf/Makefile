@@ -5,4 +5,6 @@ LIBNAME	= colibri-conf
 LIBVER	= 0
 LIBREV	= 0.1
 
+DEPENDS = glib-2.0
+
 include ../make-core.mk
