@@ -1,7 +1,7 @@
 /*
- * IPv4 address helpers
+ * Colibri IPv4 address helpers
  *
- * Copyright (c) 2017-2020 Alexei A. Smekalkine <ikle@ikle.ru>
+ * Copyright (c) 2017-2021 Alexei A. Smekalkine <ikle@ikle.ru>
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -11,7 +11,7 @@
 
 #include <arpa/inet.h>
 
-#include "net-ipv4.h"
+#include <colibri/net/ipv4.h>
 
 /*
  * We hard code maximum address length to be in sync with scanf format.

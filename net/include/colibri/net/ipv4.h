@@ -1,13 +1,13 @@
 /*
- * IPv4 address helpers
+ * Colibri IPv4 address helpers
  *
  * Copyright (c) 2017-2020 Alexei A. Smekalkine <ikle@ikle.ru>
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#ifndef NET_IPV4_H
-#define NET_IPV4_H  1
+#ifndef COLIBRI_NET_IPV4_H
+#define COLIBRI_NET_IPV4_H  1
 
 #include <netinet/in.h>
 
@@ -29,4 +29,4 @@ size_t print_ipv4 (char *to, size_t size, const struct in_addr *from);
 size_t print_ipv4_masked (char *to, size_t size, const struct ipv4_masked *o);
 size_t print_ipv4_range  (char *to, size_t size, const struct ipv4_range  *o);
 
-#endif  /* NET_IPV4_H */
+#endif  /* COLIBRI_NET_IPV4_H */

@@ -1,5 +1,5 @@
 /*
- * IPv6 address helpers
+ * Colibri IPv6 address helpers
  *
  * Copyright (c) 2017-2020 Alexei A. Smekalkine <ikle@ikle.ru>
  *
@@ -11,7 +11,7 @@
 
 #include <arpa/inet.h>
 
-#include "net-ipv6.h"
+#include <colibri/net/ipv6.h>
 
 /*
  * We hard code maximum address length to be in sync with scanf format.

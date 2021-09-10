@@ -1,7 +1,7 @@
 /*
- * Internet address helpers
+ * Colibri Internet address helpers
  *
- * Copyright (c) 2017-2020 Alexei A. Smekalkine <ikle@ikle.ru>
+ * Copyright (c) 2017-2021 Alexei A. Smekalkine <ikle@ikle.ru>
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -11,9 +11,9 @@
 
 #include <netdb.h>
 
-#include "inet.h"
+#include <colibri/net/inet.h>
 
-int get_proto (const char *from, unsigned *to)
+int inet_get_proto (const char *from, unsigned *to)
 {
 	struct protoent *p;
 	char tail;
@@ -36,7 +36,7 @@ int get_proto (const char *from, unsigned *to)
 	return 1;
 }
 
-int get_service (const char *from, unsigned *to)
+int inet_get_service (const char *from, unsigned *to)
 {
 	struct addrinfo hints, *res, *p;
 	struct sockaddr_in  *s4;
@@ -68,7 +68,7 @@ found:
 	return 1;
 }
 
-int get_port_range (const char *from, struct ip_port_range *to)
+int inet_get_port_range (const char *from, struct ip_port_range *to)
 {
 	char tail;
 

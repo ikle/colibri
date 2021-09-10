@@ -1,13 +1,13 @@
 /*
- * IPv6 address helpers
+ * Colibri IPv6 address helpers
  *
  * Copyright (c) 2017-2020 Alexei A. Smekalkine <ikle@ikle.ru>
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#ifndef NET_IPV6_H
-#define NET_IPV6_H  1
+#ifndef COLIBRI_NET_IPV6_H
+#define COLIBRI_NET_IPV6_H  1
 
 #include <netinet/in.h>
 
@@ -29,4 +29,4 @@ size_t print_ipv6 (char *to, size_t size, const struct in6_addr *from);
 size_t print_ipv6_masked (char *to, size_t size, const struct ipv6_masked *o);
 size_t print_ipv6_range  (char *to, size_t size, const struct ipv6_range  *o);
 
-#endif  /* NET_IPV6_H */
+#endif  /* COLIBRI_NET_IPV6_H */
