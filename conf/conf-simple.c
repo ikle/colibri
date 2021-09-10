@@ -1,7 +1,7 @@
 /*
- * Configuration Interface
+ * Colibri simple configuration access helpers
  *
- * Copyright (c) 2018-2020 Alexei A. Smekalkine <ikle@ikle.ru>
+ * Copyright (c) 2018-2021 Alexei A. Smekalkine <ikle@ikle.ru>
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -15,7 +15,7 @@
 
 #include <glib.h>
 
-#include "conf.h"
+#include <colibri/conf/simple.h>
 
 static const char *path_root (void)
 {
