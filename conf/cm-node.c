@@ -1,7 +1,7 @@
 /*
- * Configuration Management, Node Helper Module
+ * Colibri configuration node helpers
  *
- * Copyright (c) 2011-2017 Alexei A. Smekalkine
+ * Copyright (c) 2011-2021 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -12,9 +12,9 @@
 #include <string.h>
 #include <unistd.h>
 
-#include <cm/kind.h>
-#include <cm/node.h>
-#include <cm/parse.h>
+#include <colibri/conf/kind.h>
+#include <colibri/conf/node.h>
+#include <colibri/conf/parse.h>
 
 struct item {
 	struct item *parent;

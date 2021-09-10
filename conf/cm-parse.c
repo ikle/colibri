@@ -1,7 +1,7 @@
 /*
- * Configuration Management, Parser Helper Module
+ * Colibri configuration parser helpers
  *
- * Copyright (c) 2011-2017 Alexei A. Smekalkine
+ * Copyright (c) 2011-2021 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <cm/parse.h>
+#include <colibri/conf/parse.h>
 
 static char *chomp (char *line)
 {

@@ -1,13 +1,13 @@
 /*
- * Configuration Management, Kind Helper Module
+ * Colibri configuration kind helpers
  *
- * Copyright (c) 2011-2017 Alexei A. Smekalkine
+ * Copyright (c) 2011-2021 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#ifndef CM_KIND_H
-#define CM_KIND_H  1
+#ifndef COLIBRI_CONF_KIND_H
+#define COLIBRI_CONF_KIND_H  1
 
 /*
  * The cm_kind_validate function validates value against specified kind.
@@ -24,4 +24,4 @@ int cm_kind_validate (const char *kind, const char *value);
 int cm_kind_help (const char *kind, size_t index,
 		  const char **name, const char **help);
 
-#endif  /* CM_KIND_H */
+#endif  /* COLIBRI_CONF_KIND_H */

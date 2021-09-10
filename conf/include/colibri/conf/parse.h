@@ -1,13 +1,13 @@
 /*
- * Configuration Management, Parser Helper Module
+ * Colibri configuration parser helpers
  *
- * Copyright (c) 2011-2017 Alexei A. Smekalkine
+ * Copyright (c) 2011-2021 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#ifndef CM_PARSE_H
-#define CM_PARSE_H  1
+#ifndef COLIBRI_CONF_PARSE_H
+#define COLIBRI_CONF_PARSE_H  1
 
 #include <stddef.h>
 
@@ -17,4 +17,4 @@
  */
 char *cm_parse (const char *spec, const char *node, char *buf, size_t size);
 
-#endif  /* CM_PARSE_H */
+#endif  /* COLIBRI_CONF_PARSE_H */

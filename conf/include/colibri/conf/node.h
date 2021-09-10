@@ -1,16 +1,17 @@
 /*
- * Configuration Management, Node Helper Module
+ * Colibri configuration node helpers
  *
  * Copyright (c) 2011-2021 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#ifndef CM_NODE_H
-#define CM_NODE_H  1
+#ifndef COLIBRI_CONF_NODE_H
+#define COLIBRI_CONF_NODE_H  1
 
 #include <stddef.h>
-#include <cm/compiler.h>
+
+#include <colibri/conf/compiler.h>
 
 /*
  * The cm_node_init sets the specified buffer for use in subsequent
@@ -83,4 +84,4 @@ int cm_node_read (const char *conf, struct cm_node *o,
  */
 int cm_node_write (const char *conf, struct cm_node *o);
 
-#endif  /* CM_NODE_H */
+#endif  /* COLIBRI_CONF_NODE_H */

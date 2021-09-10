@@ -1,5 +1,5 @@
 /*
- * Configuration Management, Kind Helper Module
+ * Colibri configuration kind helpers
  *
  * Copyright (c) 2011-2021 Alexei A. Smekalkine
  *
@@ -12,8 +12,8 @@
 #include <wchar.h>
 #include <wctype.h>
 
-#include <cm/kind.h>
-#include <cm/parse.h>
+#include <colibri/conf/kind.h>
+#include <colibri/conf/parse.h>
 
 /* compare first term in expression with another term */
 static int compare_prefix (const char *expr, const char *term)
