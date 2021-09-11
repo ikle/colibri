@@ -20,7 +20,14 @@ int conf_exists (struct conf *o, ...);
 int conf_get (struct conf *o, char *buf, size_t size);
 int conf_rewind (struct conf *o);
 
-typedef int (conf_cb) (struct conf *o, char *entry, void *cookie);
+enum {
+	CONF_TYPE_NODE	= 0,
+	CONF_TYPE_TAG	= 1,	/* not supported yet */
+	CONF_TYPE_ATTR	= 2,
+	CONF_TYPE_VALUE	= 3,
+};
+
+typedef int (conf_cb) (struct conf *o, int type, char *entry, void *cookie);
 
 int conf_iterate (struct conf *o, conf_cb *cb, void *cookie, ...);
 int conf_fetch (struct conf *o, char *buf, size_t size, ...);

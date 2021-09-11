@@ -12,6 +12,7 @@
 #include <string.h>
 
 #include <dirent.h>
+#include <unistd.h>
 
 #include <glib.h>
 
@@ -196,17 +197,29 @@ int conf_rewind (struct conf *o)
 	return conf_init (o);
 }
 
+static int is_attr (struct conf *o, const char *entry)
+{
+	char path[512];
+
+	snprintf (path, sizeof (path), "%s/%s/node.val", o->root, entry);
+
+	return access (path, R_OK) == 0;
+}
+
 int conf_iteratev (struct conf *o, conf_cb *cb, void *cookie, va_list ap)
 {
 	struct conf *c;
 	char entry[128];
-	int ok = 1;
+	int type, ok = 1;
 
 	if ((c = conf_clonev (o, ap)) == NULL)
 		return ok;
 
 	while (conf_get (c, entry, sizeof (entry))) {
-		if (!(ok = cb (o, entry, cookie)))
+		type = c->file != NULL ? CONF_TYPE_VALUE :
+		       is_attr (c, entry) ? CONF_TYPE_ATTR: CONF_TYPE_NODE;
+
+		if (!(ok = cb (o, type, entry, cookie)))
 			break;
 	}
 
