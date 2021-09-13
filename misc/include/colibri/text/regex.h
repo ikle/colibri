@@ -6,9 +6,9 @@
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#ifndef COLIBRI_CONF_REGEX_H
-#define COLIBRI_CONF_REGEX_H
+#ifndef COLIBRI_TEXT_REGEX_H
+#define COLIBRI_TEXT_REGEX_H
 
 int regex_match (const char *re, const char *value);
 
-#endif  /* COLIBRI_CONF_REGEX_H */
+#endif  /* COLIBRI_TEXT_REGEX_H */

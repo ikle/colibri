@@ -10,7 +10,7 @@
 
 #include <regex.h>
 
-#include <colibri/conf/regex.h>
+#include <colibri/text/regex.h>
 
 int regex_match (const char *re, const char *value)
 {
