@@ -7,7 +7,7 @@
  */
 
 #ifndef COLIBRI_CONF_SIMPLE_H
-#define COLIBRI_CONF_SIMPLE_H
+#define COLIBRI_CONF_SIMPLE_H  1
 
 #include <stddef.h>
 

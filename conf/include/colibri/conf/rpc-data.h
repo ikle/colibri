@@ -7,7 +7,7 @@
  */
 
 #ifndef COLIBRI_CONF_RPC_DATA_H
-#define COLIBRI_CONF_RPC_DATA_H
+#define COLIBRI_CONF_RPC_DATA_H  1
 
 #include <colibri/conf/compiler.h>
 

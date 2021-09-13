@@ -7,7 +7,7 @@
  */
 
 #ifndef COLIBRI_SYS_PAM_H
-#define COLIBRI_SYS_PAM_H
+#define COLIBRI_SYS_PAM_H  1
 
 #include <security/pam_appl.h>
 

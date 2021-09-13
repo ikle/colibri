@@ -7,7 +7,7 @@
  */
 
 #ifndef COLIBRI_TEXT_REGEX_H
-#define COLIBRI_TEXT_REGEX_H
+#define COLIBRI_TEXT_REGEX_H  1
 
 int regex_match (const char *re, const char *value);
 

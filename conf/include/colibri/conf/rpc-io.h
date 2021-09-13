@@ -7,7 +7,7 @@
  */
 
 #ifndef COLIBRI_CONF_RPC_IO_H
-#define COLIBRI_CONF_RPC_IO_H
+#define COLIBRI_CONF_RPC_IO_H  1
 
 #include <stdio.h>
 

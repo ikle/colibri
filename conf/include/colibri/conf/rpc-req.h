@@ -7,7 +7,7 @@
  */
 
 #ifndef COLIBRI_CONF_RPC_REQ_H
-#define COLIBRI_CONF_RPC_REQ_H
+#define COLIBRI_CONF_RPC_REQ_H  1
 
 #include <stdio.h>
 

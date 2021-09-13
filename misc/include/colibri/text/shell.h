@@ -7,7 +7,7 @@
  */
 
 #ifndef COLIBRI_TEXT_SHELL_H
-#define COLIBRI_TEXT_SHELL_H
+#define COLIBRI_TEXT_SHELL_H  1
 
 #include <stddef.h>
 

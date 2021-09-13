@@ -7,7 +7,7 @@
  */
 
 #ifndef COLIBRI_CONF_ERROR_H
-#define COLIBRI_CONF_ERROR_H
+#define COLIBRI_CONF_ERROR_H  1
 
 enum conf_error {
 	CONF_SUCCESS		= 0,
