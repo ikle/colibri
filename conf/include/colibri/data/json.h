@@ -12,4 +12,7 @@
 #include <colibri/data/json-list.h>
 #include <colibri/data/json-dict.h>
 
+#include <colibri/data/json-input.h>
+#include <colibri/data/json-output.h>
+
 #endif  /* COLIBRI_DATA_JSON_H */
