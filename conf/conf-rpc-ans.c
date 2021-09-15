@@ -32,7 +32,10 @@ static json_object *json_fetch (json_object *root, const char *key, int i)
 
 int conf_ans_code (json_object *o)
 {
-	json_object *p = json_fetch (o, "error", 0);
+	json_object *p;
+
+	if ((p = json_fetch (o, "error", 0)) == NULL)
+		return 0;
 
 	return json_object_get_int (p);
 }
