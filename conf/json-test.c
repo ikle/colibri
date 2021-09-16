@@ -21,25 +21,17 @@ int main (int argc, char *argv[])
 		return 1;
 	}
 
-	if ((args = json_dict ()) == NULL) {
-		perror ("cannot create arguments dict");
-		return 1;
-	}
-
-	if ((opts = json_list (7)) == NULL) {
-		perror ("cannot create opts list");
-		return 1;
-	}
-
 	ok &= json_dict_set_int    (req, "id",    13);
 	ok &= json_dict_set        (req, "error", NULL);
 	ok &= json_dict_set_string (req, "mode",  "auth");
 	ok &= json_dict_set_string (req, "cmd",   "ba");
-	ok &= json_dict_set        (req, "args",  args);
+
+	ok &= (args = json_dict_set_dict (req, "args")) != NULL;
 
 	ok &= json_dict_set_string (args, "user",     "admin");
 	ok &= json_dict_set_string (args, "password", "top-secret");
-	ok &= json_dict_set        (args, "opts",     opts);
+
+	ok &= (opts = json_dict_set_list (args, "opts", 7)) != NULL;
 
 	ok &= json_list_set_bool   (opts, 0, 1);
 	ok &= json_list_set_int    (opts, 1, 100500);
