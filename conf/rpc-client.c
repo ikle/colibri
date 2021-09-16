@@ -45,12 +45,13 @@ struct json *rpc_auth (const char *key, const char *user, const char *pass)
 	struct json *o, *auth;
 	int ok = 1;
 
-	if ((o = rpc_req (key, "auth", "ba", 0, NULL)) == NULL)
+	if ((o = rpc_req (key, "session", "login", 0, NULL)) == NULL)
 		return NULL;
 
 	if ((auth = json_dict_set_dict (o, "args")) == NULL)
 		goto error;
 
+	ok &= json_dict_set_string (auth, "type",     "ba");
 	ok &= json_dict_set_string (auth, "user",     user);
 	ok &= json_dict_set_string (auth, "password", pass);
 
