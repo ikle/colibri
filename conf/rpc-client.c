@@ -6,6 +6,8 @@
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
+#include <string.h>
+
 #include <colibri/rpc/client.h>
 
 struct json *rpc_req (const char *key, const char *mode, const char *cmd,
@@ -83,6 +85,31 @@ const char *rpc_ans_reason (struct json *o)
 		return NULL;
 
 	return json_list_get_string (e, 1);
+}
+
+int rpc_ans_format (struct json *o)
+{
+	const char *format;
+
+	if (json_type (o) != JSON_DICT)
+		return RPC_FORMAT_PLAIN;
+
+	if ((format = json_dict_get_string (o, "format")) == NULL)
+		return RPC_FORMAT_PLAIN;
+
+	if (strcmp (format, "text") == 0)
+		return RPC_FORMAT_TEXT;
+
+	if (strcmp (format, "dict") == 0)
+		return RPC_FORMAT_DICT;
+
+	if (strcmp (format, "tree") == 0)
+		return RPC_FORMAT_TREE;
+
+	if (strcmp (format, "table") == 0)
+		return RPC_FORMAT_TABLE;
+
+	return RPC_FORMAT_PLAIN;
 }
 
 struct json *rpc_ans_data (struct json *o)

@@ -39,22 +39,33 @@ error:
 	return NULL;
 }
 
-struct json *rpc_ans_add (struct json *o, const char *type)
+struct json *rpc_ans_add (struct json *o, int format)
 {
-	if (!json_dict_set_string (o, "format", type))
-		return NULL;
+	switch (format) {
+	case RPC_FORMAT_TEXT:
+		if (!json_dict_set_string (o, "format", "text"))
+			return NULL;
 
-	if (strcmp (type, "text") == 0)
 		return json_dict_set_list (o, "data", 0);
 
-	if (strcmp (type, "dict") == 0)
+	case RPC_FORMAT_DICT:
+		if (!json_dict_set_string (o, "format", "dict"))
+			return NULL;
+
 		return json_dict_set_dict (o, "data");
 
-	if (strcmp (type, "tree") == 0)
+	case RPC_FORMAT_TREE:
+		if (!json_dict_set_string (o, "format", "tree"))
+			return NULL;
+
 		return json_dict_set_dict (o, "data");
 
-	if (strcmp (type, "table") == 0)
+	case RPC_FORMAT_TABLE:
+		if (!json_dict_set_string (o, "format", "table"))
+			return NULL;
+
 		return json_dict_set_list (o, "data", 0);
+	}
 
 	return NULL;
 }
