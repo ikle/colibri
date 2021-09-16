@@ -19,8 +19,9 @@ void cgi_input_close (struct cgi_input *o);
 
 int cgi_input_read (void *data, int len, void *cookie);
 
-const char *cgi_input_type (struct cgi_input *o);
-size_t cgi_input_len (struct cgi_input *o);
+const char *cgi_input_method (struct cgi_input *o);
+const char *cgi_input_type   (struct cgi_input *o);
+size_t      cgi_input_len    (struct cgi_input *o);
 
 int cgi_input_blob (struct cgi_input *o, void *data, size_t len);
 

@@ -19,6 +19,7 @@ static int stdio_read (void *data, int len, void *cookie)
 struct cgi_input {
 	cgi_reader *read;
 	void *cookie;
+	const char *method;
 	const char *type;
 	size_t len;
 };
@@ -26,14 +27,16 @@ struct cgi_input {
 struct cgi_input *cgi_input_open (cgi_reader *read, void *cookie)
 {
 	struct cgi_input *o;
-	const char *type = getenv ("CONTENT_TYPE");
-	const char *len  = getenv ("CONTENT_LENGTH");
+	const char *method = getenv ("REQUEST_METHOD");
+	const char *type   = getenv ("CONTENT_TYPE");
+	const char *len    = getenv ("CONTENT_LENGTH");
 
 	if ((o = malloc (sizeof (*o))) == NULL)
 		return NULL;
 
 	o->read   = read == NULL ? stdio_read : read;
 	o->cookie = cookie;
+	o->method = method;
 	o->type   = type;
 	o->len    = len != NULL ? atoll (len) : SIZE_MAX;
 
@@ -63,6 +66,11 @@ int cgi_input_read (void *data, int len, void *cookie)
 		o->len -= n;
 
 	return n;
+}
+
+const char *cgi_input_method (struct cgi_input *o)
+{
+	return o->method;
 }
 
 const char *cgi_input_type (struct cgi_input *o)
