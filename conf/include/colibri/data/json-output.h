@@ -11,7 +11,7 @@
 
 #include <colibri/data/json-core.h>
 
-typedef int json_writer (const void *buffer, int size, void *cookie);
+typedef int json_writer (const void *data, int len, void *cookie);
 
 struct json_output *json_output_open (json_writer *write, void *cookie);
 void json_output_close (struct json_output *o);

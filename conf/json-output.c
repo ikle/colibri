@@ -21,9 +21,9 @@
 #undef json_bool
 #undef json_type
 
-static int stdio_write (const void *buffer, int size, void *cookie)
+static int stdio_write (const void *data, int len, void *cookie)
 {
-	return fwrite (buffer, 1, size, cookie);
+	return fwrite (data, 1, len, cookie);
 }
 
 struct json_output {

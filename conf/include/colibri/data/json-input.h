@@ -11,7 +11,7 @@
 
 #include <colibri/data/json-core.h>
 
-typedef int json_reader (void *buffer, int size, void *cookie);
+typedef int json_reader (void *data, int len, void *cookie);
 
 struct json_input *json_input_open (json_reader *read, void *cookie);
 void json_input_close (struct json_input *o);

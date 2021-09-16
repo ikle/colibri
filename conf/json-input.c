@@ -20,9 +20,9 @@
 #undef json_bool
 #undef json_type
 
-static int stdio_read (void *buffer, int size, void *cookie)
+static int stdio_read (void *data, int len, void *cookie)
 {
-	return fread (buffer, 1, size, cookie);
+	return fread (data, 1, len, cookie);
 }
 
 struct json_input {
