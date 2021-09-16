@@ -19,11 +19,17 @@ int          json_dict_get_int    (struct json *o, const char *key);
 double       json_dict_get_number (struct json *o, const char *key);
 const char  *json_dict_get_string (struct json *o, const char *key);
 
+struct json *json_dict_get_list (struct json *o, const char *key);
+struct json *json_dict_get_dict (struct json *o, const char *key);
+
 int json_dict_set        (struct json *o, const char *key, struct json *value);
 int json_dict_set_bool   (struct json *o, const char *key, int value);
 int json_dict_set_int    (struct json *o, const char *key, int value);
 int json_dict_set_float  (struct json *o, const char *key, double value);
 int json_dict_set_string (struct json *o, const char *key, const char *value);
+
+struct json *json_dict_set_list (struct json *o, const char *key, int size);
+struct json *json_dict_set_dict (struct json *o, const char *key);
 
 void json_dict_remove (struct json *o, const char *key);
 
