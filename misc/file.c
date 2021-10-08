@@ -31,12 +31,9 @@ int file_copy (const char *src, const char *dst)
 	if ((to = fopen (dst, "wb")) == NULL)
 		goto no_to;
 
-	while (!feof (from)) {
-		count = fread (buf, 1, sizeof (buf), from);
-
+	while ((count = fread (buf, 1, sizeof (buf), from)) > 0)
 		if (fwrite (buf, count, 1, to) != 1)
 			goto no_write;
-	}
 
 	status = !ferror (from);
 
