@@ -6,65 +6,10 @@
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#include <errno.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "file.h"
-
-int file_remove (const char *path)
-{
-	return remove (path) == 0;
-}
-
-int file_copy (const char *src, const char *dst)
-{
-	FILE *from, *to;
-	size_t count;
-	char buf[BUFSIZ];
-	int status;
-
-	if ((from = fopen (src, "rb")) == NULL)
-		goto no_from;
-
-	if ((to = fopen (dst, "wb")) == NULL)
-		goto no_to;
-
-	while ((count = fread (buf, 1, sizeof (buf), from)) > 0)
-		if (fwrite (buf, count, 1, to) != 1)
-			goto no_write;
-
-	status = !ferror (from);
-
-	fclose (to);
-	fclose (from);
-
-	return status;;
-no_write:
-	fclose (to);
-no_to:  
-	fclose (from);
-no_from:
-	return 0; 
-}
-
-int file_move (const char *src, const char *dst)
-{
-	if (rename (src, dst) == 0)
-		return 1;
-
-#ifdef EXDEV
-	if (errno != EXDEV || !file_copy (src, dst))
-		return 0;
-
-	if (file_remove (src))
-		return 1;
-
-	(void) file_remove (dst);
-#endif
-	return 0; 
-}
 
 /* returns newly allocated string */
 char *file_basename (const char *path)
