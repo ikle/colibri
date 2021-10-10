@@ -1,7 +1,7 @@
 /*
- * file: generic helpers
+ * Colibri file basename helper
  *
- * Copyright (c) 2006-2017 Alexei A. Smekalkine <ikle@ikle.ru>
+ * Copyright (c) 2006-2021 Alexei A. Smekalkine <ikle@ikle.ru>
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "file.h"
+#include <colibri/file/util.h>
 
 /* returns newly allocated string */
 char *file_basename (const char *path)

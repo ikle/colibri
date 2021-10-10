@@ -8,7 +8,7 @@
 
 #include <stdio.h>
 
-#include "file.h"
+#include <colibri/file/util.h>
 
 int file_remove (const char *path)
 {

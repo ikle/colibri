@@ -9,7 +9,7 @@
 #include <errno.h>
 #include <stdio.h>
 
-#include "file.h"
+#include <colibri/file/util.h>
 
 int file_move (const char *src, const char *dst)
 {
