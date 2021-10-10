@@ -8,7 +8,7 @@
 
 #include <colibri/file/dump.h>
 
-void capi_dump (FILE *to, const char *prefix, const void *data, size_t size)
+void file_dump (FILE *to, const char *prefix, const void *data, size_t size)
 {
 	const unsigned char *p;
 	size_t i;
