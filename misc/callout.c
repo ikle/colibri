@@ -8,8 +8,9 @@
 
 #include <errno.h>
 
+#include <colibri/data/seq.h>
+
 #include "callout.h"
-#include "seq.h"
 
 #define nitems(a)  (sizeof (a) / sizeof ((a)[0]))
 

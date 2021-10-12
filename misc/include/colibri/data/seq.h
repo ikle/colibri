@@ -1,13 +1,13 @@
 /*
- * Sequence: list, queue or stack
+ * Colibri Sequence: list, queue or stack
  *
  * Copyright (c) 2014-2021 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#ifndef DATA_SEQ_H
-#define DATA_SEQ_H  1
+#ifndef COLIBRI_DATA_SEQ_H
+#define COLIBRI_DATA_SEQ_H  1
 
 #include <assert.h>
 #include <stddef.h>
@@ -107,4 +107,4 @@ static inline int type##_seq_is_empty (struct type##_seq *s)		\
 	return s->head == NULL;						\
 }
 
-#endif  /* DATA_SEQ_H */
+#endif  /* COLIBRI_DATA_SEQ_H */
