@@ -12,13 +12,15 @@
 
 #include "callout.h"
 
-#define nitems(a)  (sizeof (a) / sizeof ((a)[0]))
+#ifndef ARRAY_SIZE
+#define ARRAY_SIZE(a)  (sizeof (a) / sizeof ((a)[0]))
+#endif
 
 SEQ_DECLARE (callout)
 
 static time_t now;
 static struct callout_seq wheel[2][256];
-static const size_t size = nitems (wheel[0]);
+static const size_t size = ARRAY_SIZE (wheel[0]);
 
 static void wheel_enqueue (struct callout *o, time_t timeout)
 {
@@ -87,7 +89,7 @@ void callout_sys_init (void)
 
 	now = time (NULL);
 
-	for (level = 0; level < nitems (wheel); ++level)
+	for (level = 0; level < ARRAY_SIZE (wheel); ++level)
 		for (i = 0; i < size; ++i)
 			callout_seq_init (wheel[level] + i);
 }
