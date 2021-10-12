@@ -9,11 +9,11 @@
 #ifndef JANUS_CALLOUT_H
 #define JANUS_CALLOUT_H  1
 
-#include <time.h>
+#include <stddef.h>
 
 struct callout {
 	struct callout *next;
-	time_t time;
+	size_t time;
 	void (*fn) (void *cookie);
 	void *cookie;
 };
@@ -22,7 +22,7 @@ struct callout {
 void callout_init (struct callout *o, void (*fn) (void *cookie), void *cookie);
 
 /* schedule this callout to run in the specified timeout */
-void callout_schedule (struct callout *o, time_t timeout);
+void callout_schedule (struct callout *o, size_t timeout);
 
 /* initalize callout system */
 void callout_sys_init (void);

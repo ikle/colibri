@@ -7,6 +7,7 @@
  */
 
 #include <errno.h>
+#include <time.h>
 
 #include <colibri/data/seq.h>
 
@@ -18,7 +19,7 @@
 
 SEQ_DECLARE (callout)
 
-static time_t now;
+static size_t now;
 static struct callout_seq wheel[2][256];
 static const size_t size = ARRAY_SIZE (wheel[0]);
 
@@ -68,9 +69,9 @@ void callout_init (struct callout *o, void (*fn) (void *cookie), void *cookie)
 }
 
 /* schedule this callout to run in specified timeout */
-void callout_schedule (struct callout *o, time_t timeout)
+void callout_schedule (struct callout *o, size_t timeout)
 {
-	time_t to = time (NULL) + timeout;
+	size_t to = time (NULL) + timeout;
 
 	if (to < o->time)
 		o->time = to;	/* reschedule it earlier */
@@ -97,7 +98,7 @@ void callout_sys_init (void)
 /* process ready callouts and return */
 void callout_process (void)
 {
-	time_t current = time (NULL);
+	size_t current = time (NULL);
 	struct callout *ready, *next;
 
 	for (; now < current; ++now)
