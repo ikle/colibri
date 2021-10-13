@@ -170,12 +170,8 @@ void co_counter_free (struct co_counter *o)
 
 void co_counter_add (struct co_counter *o, struct callout *co, size_t at)
 {
-	if (at > o->now) {
-		co->time = at;
-		co_wheel_push (o->seq.head, at - o->now, co, at);
-	}
-	else
-		co->cb (1, co->cookie);  /* reason = timeout */
+	co->time = at > o->now ? at : o->now;
+	co_wheel_push (o->seq.head, at - o->now, co, at);
 }
 
 static void co_counter_step (struct co_counter *o)
