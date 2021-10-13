@@ -183,6 +183,6 @@ static void co_counter_step (struct co_counter *o)
 
 void co_counter_run (struct co_counter *o, size_t now)
 {
-	while (o->now < now)
+	while (o->now <= now)
 		co_counter_step (o);
 }
