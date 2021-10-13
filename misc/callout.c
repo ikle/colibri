@@ -95,7 +95,7 @@ static void co_wheel_push (struct co_wheel *o, size_t delay,
 		return;
 	}
 
-	co_wheel_push (o->next, delay >> o->order, co, i);
+	co_wheel_push (o->next, delay >> o->order, co, i >> o->order);
 }
 
 static void co_wheel_shake (struct co_wheel *o, struct co_counter *c, size_t i)
