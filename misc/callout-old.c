@@ -11,7 +11,7 @@
 
 #include <colibri/data/seq.h>
 
-#include "callout.h"
+#include "callout-old.h"
 
 #ifndef ARRAY_SIZE
 #define ARRAY_SIZE(a)  (sizeof (a) / sizeof ((a)[0]))
