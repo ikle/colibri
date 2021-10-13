@@ -14,7 +14,7 @@
 typedef void callout_cb (int reason, void *cookie);
 
 struct callout {
-	struct callout *next;
+	struct callout *next;  /* for internal use, do not touch it */
 	size_t time;
 	callout_cb *cb;
 	void *cookie;
