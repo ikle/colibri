@@ -101,9 +101,12 @@ static void co_wheel_push (struct co_wheel *o, size_t delay,
 static void co_wheel_shake (struct co_wheel *o, struct co_counter *c, size_t i)
 {
 	struct callout_seq *spoke = o->spoke + co_wheel_index (o, i);
+	struct callout_seq s = *spoke;
 	struct callout *co;
 
-	while ((co = callout_seq_dequeue (spoke)) != NULL)
+	callout_seq_init (spoke);
+
+	while ((co = callout_seq_dequeue (&s)) != NULL)
 		co_counter_add (c, co, co->time);
 }
 
