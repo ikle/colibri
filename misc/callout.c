@@ -110,7 +110,7 @@ static void co_wheel_shake (struct co_wheel *o, struct co_counter *c, size_t i)
 		co_counter_add (c, co, co->time);
 }
 
-static void co_wheel_step (struct co_wheel *o, struct co_counter *c, size_t i)
+static void co_wheel_move (struct co_wheel *o, struct co_counter *c, size_t i)
 {
 	if (o->next == NULL || co_wheel_index (o, i) != 0)
 		return;
@@ -118,7 +118,7 @@ static void co_wheel_step (struct co_wheel *o, struct co_counter *c, size_t i)
 	i >>= o->order;
 
 	co_wheel_shake (o->next, c, i);
-	co_wheel_step  (o->next, c, i);
+	co_wheel_move  (o->next, c, i);
 }
 
 SEQ_DECLARE (co_wheel)
@@ -177,7 +177,7 @@ void co_counter_add (struct co_counter *o, struct callout *co, size_t at)
 static void co_counter_step (struct co_counter *o)
 {
 	co_wheel_throw (o->seq.head, o->now, 1);  /* reason = timeout */
-	co_wheel_step  (o->seq.head, o, ++o->now);
+	co_wheel_move  (o->seq.head, o, ++o->now);
 }
 
 void co_counter_run (struct co_counter *o, size_t now)
