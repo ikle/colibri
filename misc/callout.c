@@ -174,14 +174,10 @@ void co_counter_add (struct co_counter *o, struct callout *co, size_t at)
 	co_wheel_push (o->seq.head, at - o->now, co, at);
 }
 
-static void co_counter_step (struct co_counter *o)
-{
-	co_wheel_throw (o->seq.head, o->now, 1);  /* reason = timeout */
-	co_wheel_move  (o->seq.head, o, ++o->now);
-}
-
 void co_counter_run (struct co_counter *o, size_t now)
 {
-	while (o->now <= now)
-		co_counter_step (o);
+	while (o->now <= now) {
+		co_wheel_throw (o->seq.head, o->now, 1);  /* timeout */
+		co_wheel_move  (o->seq.head, o, ++o->now);
+	}
 }
