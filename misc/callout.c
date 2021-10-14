@@ -171,7 +171,7 @@ void co_counter_free (struct co_counter *o)
 void co_counter_add (struct co_counter *o, struct callout *co, size_t at)
 {
 	co->time = at > o->now ? at : o->now;
-	co_wheel_push (o->seq.head, at - o->now, co, at);
+	co_wheel_push (o->seq.head, co->time - o->now, co, co->time);
 }
 
 void co_counter_run (struct co_counter *o, size_t now)
