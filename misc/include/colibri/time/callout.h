@@ -44,4 +44,3 @@ void co_counter_add (struct co_counter *o, struct callout *co, size_t at);
 void co_counter_run (struct co_counter *o, size_t now);
 
 #endif  /* COLIBRI_TIME_CALLOUT_H */
-
