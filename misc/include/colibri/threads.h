@@ -10,18 +10,9 @@
 #define COLIBRI_THREADS_H  1
 
 /*
- * Mac OS X and iOS are unixes really
- */
-#if !defined (__unix__) && defined (__APPLE__) && defined (__MACH__)
-#define __unix__
-#endif
-
-/*
  * Get POSIX macroses
  */
-#if defined (unix) || defined (__unix__) || defined (__unix)
-#include <unistd.h>
-#endif
+#include <colibri/bits/unistd.h>
 
 #if __STDC_VERSION__ >= 201112L && !defined (__STDC_NO_THREADS__)
 
