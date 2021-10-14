@@ -45,7 +45,7 @@
 #include <sched.h>
 #endif
 
-#if __STDC_VERSION__ < 199901L
+#if __STDC_VERSION__ < 199901L && !defined (restrict)
 #define restrict
 #endif
 
