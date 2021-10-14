@@ -9,8 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <unistd.h>
-
+#include <colibri/threads.h>
 #include <colibri/time/callout.h>
 
 #define COUNT	110
@@ -35,6 +34,7 @@ int main (int argc, char *argv[])
 	struct co_counter *c;
 	struct object *o;
 	size_t now = 1, i;
+	struct timespec ts = {0, 100000000L};
 
 	if ((c = co_counter_alloc (now, 4, 2)) == NULL) {
 		perror ("E: cannot create callout counter");
@@ -53,7 +53,7 @@ int main (int argc, char *argv[])
 
 	for (; now <= PERIOD; ++now) {
 		co_counter_run (c, now);
-		sleep (1);
+		thrd_sleep (&ts, NULL);
 	}
 
 	co_counter_free (c);
