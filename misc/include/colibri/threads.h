@@ -1,13 +1,13 @@
 /*
- * C11 Threads API
+ * Colibri C11 Threads API
  *
  * Copyright (c) 2019-2021 Alexei A. Smekalkine <ikle@ikle.ru>
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#ifndef C11_THREADS_H
-#define C11_THREADS_H  1
+#ifndef COLIBRI_THREADS_H
+#define COLIBRI_THREADS_H  1
 
 /*
  * Mac OS X and iOS are unixes really
@@ -258,4 +258,4 @@ static inline int tss_set (tss_t key, void *value)
 #error "C11 threads does not supported"
 
 #endif  /* no C11 threads */
-#endif  /* C11_THREADS_H */
+#endif  /* COLIBRI_THREADS_H */
