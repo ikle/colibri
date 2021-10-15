@@ -107,6 +107,7 @@ no_worker:
 	mtx_destroy (&o->counter_lock);
 	co_counter_free (o->counter);
 no_counter:
+	mtx_destroy (&o->queue_lock);
 	free (o);
 	return NULL;
 }
