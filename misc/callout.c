@@ -12,14 +12,6 @@
 #include <colibri/data/seq.h>
 #include <colibri/time/callout.h>
 
-void callout_init (struct callout *o, callout_cb *cb, void *cookie)
-{
-	o->next   = NULL;
-	o->time   = 0;
-	o->cb     = cb;
-	o->cookie = cookie;
-}
-
 SEQ_DECLARE (callout)
 
 struct co_wheel {

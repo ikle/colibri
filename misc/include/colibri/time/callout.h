@@ -11,19 +11,7 @@
 
 #include <stddef.h>
 
-typedef void callout_cb (int reason, void *cookie);
-
-struct callout {
-	struct callout *next;  /* for internal use, do not touch it */
-	size_t time;
-	callout_cb *cb;
-	void *cookie;
-};
-
-/*
- * Initialize callout object
- */
-void callout_init (struct callout *o, callout_cb *cb, void *cookie);
+#include <colibri/time/callout-core.h>
 
 /*
  * Create callout counter with counter wheels with 2^order time slots
