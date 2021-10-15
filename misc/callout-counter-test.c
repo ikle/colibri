@@ -1,5 +1,5 @@
 /*
- * Colibri simple callout task scheduler test
+ * Colibri callout counter test
  *
  * Copyright (c) 2015-2021 Alexei A. Smekalkine <ikle@ikle.ru>
  *
@@ -10,7 +10,7 @@
 #include <stdlib.h>
 
 #include <colibri/threads.h>
-#include <colibri/time/callout.h>
+#include <colibri/time/callout-counter.h>
 
 #define COUNT	110
 #define PERIOD	100

@@ -1,15 +1,13 @@
 /*
- * Colibri simple callout task scheduler
+ * Colibri callout counter helpers
  *
  * Copyright (c) 2015-2021 Alexei A. Smekalkine <ikle@ikle.ru>
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#ifndef COLIBRI_TIME_CALLOUT_H
-#define COLIBRI_TIME_CALLOUT_H  1
-
-#include <stddef.h>
+#ifndef COLIBRI_TIME_CALLOUT_COUNTER_H
+#define COLIBRI_TIME_CALLOUT_COUNTER_H  1
 
 #include <colibri/time/callout-core.h>
 
@@ -31,4 +29,4 @@ void co_counter_add (struct co_counter *o, struct callout *co, size_t at);
  */
 void co_counter_run (struct co_counter *o, size_t now);
 
-#endif  /* COLIBRI_TIME_CALLOUT_H */
+#endif  /* COLIBRI_TIME_CALLOUT_COUNTER_H */
