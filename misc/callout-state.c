@@ -103,6 +103,8 @@ struct co_state *co_state_alloc (unsigned order, int count)
 
 	return o;
 no_worker:
+	cnd_destroy (&o->signal);
+	mtx_destroy (&o->counter_lock);
 	co_counter_free (o->counter);
 no_counter:
 	free (o);
