@@ -10,6 +10,7 @@
 #include <stdlib.h>
 
 #include <colibri/data/seq.h>
+#include <colibri/time/callout-counter.h>
 #include <colibri/time/callout.h>
 
 SEQ_DECLARE (callout)
