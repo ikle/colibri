@@ -21,6 +21,7 @@ struct co_state {
 
 	struct co_counter *counter;
 	mtx_t              counter_lock;
+	cnd_t              signal;
 
 	volatile int run;
 	thrd_t worker;
@@ -35,14 +36,31 @@ static size_t get_ticks (void)
 	return ts.tv_sec * 1000 + ts.tv_nsec / 1000000L;
 }
 
+static int co_clock (void *cookie)
+{
+	struct co_state *o = cookie;
+	struct timespec ts = {0, 1000000L};  /* 1kHz */
+
+	while (o->run) {
+		thrd_sleep (&ts, NULL);
+		cnd_broadcast (&o->signal);
+	}
+
+	return 0;
+}
+
 static int co_worker (void *cookie)
 {
 	struct co_state *o = cookie;
 	struct callout *co;
-	struct timespec ts = {0, 500000L};  /* 2 * 1kHz */
+	thrd_t clock;
+
+	if (thrd_create (&clock, co_clock, o) != thrd_success)
+		return 1;
+
+	mtx_lock (&o->counter_lock);
 
 	while (o->run) {
-		mtx_lock (&o->counter_lock);
 		mtx_lock (&o->queue_lock);
 
 		while ((co = callout_seq_dequeue (&o->queue)) != NULL)
@@ -51,11 +69,12 @@ static int co_worker (void *cookie)
 		mtx_unlock (&o->queue_lock);
 
 		co_counter_run (o->counter, get_ticks ());
-
-		mtx_unlock (&o->counter_lock);
-		thrd_sleep (&ts, NULL);
+		cnd_wait (&o->signal, &o->counter_lock);
 	}
 
+	mtx_unlock (&o->counter_lock);
+
+	thrd_join (clock, NULL);
 	return 0;
 }
 
@@ -74,6 +93,7 @@ struct co_state *co_state_alloc (unsigned order, int count)
 		goto no_counter;
 
 	mtx_init (&o->counter_lock, 0);
+	cnd_init (&o->signal);
 
 	o->run = 1;
 
@@ -98,6 +118,7 @@ void co_state_free (struct co_state *o)
 	o->run = 0;
 	thrd_join (o->worker, NULL);
 
+	cnd_destroy (&o->signal);
 	mtx_destroy (&o->counter_lock);
 	co_counter_free (o->counter);
 
