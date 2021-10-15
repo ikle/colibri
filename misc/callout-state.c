@@ -22,7 +22,7 @@ struct co_state {
 	struct co_counter *counter;
 	mtx_t              counter_lock;
 
-	int run;
+	volatile int run;
 	thrd_t worker;
 };
 
