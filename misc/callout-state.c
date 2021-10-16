@@ -10,7 +10,6 @@
 
 #include <colibri/data/seq.h>
 #include <colibri/threads.h>
-#include <colibri/time.h>
 #include <colibri/time/callout-clock.h>
 #include <colibri/time/callout-counter.h>
 #include <colibri/time/callout.h>
