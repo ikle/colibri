@@ -30,9 +30,12 @@ struct co_state {
 static int co_worker (void *cookie)
 {
 	struct co_state *o = cookie;
+	size_t now;
 	struct callout *co;
 
 	while (o->run) {
+		now = co_clock_get (o->clock, 1);
+
 		mtx_lock (&o->queue_lock);
 
 		while ((co = callout_seq_dequeue (&o->queue)) != NULL)
@@ -40,7 +43,7 @@ static int co_worker (void *cookie)
 
 		mtx_unlock (&o->queue_lock);
 
-		co_counter_run (o->counter, co_clock_get (o->clock, 1));
+		co_counter_run (o->counter, now);
 	}
 
 	return 0;
