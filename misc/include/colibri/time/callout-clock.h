@@ -12,7 +12,7 @@
 #include <stddef.h>
 #include <time.h>
 
-struct co_clock *co_clock_alloc (struct timespec *period);
+struct co_clock *co_clock_alloc (const struct timespec *period);
 void co_clock_free (struct co_clock *o);
 
 size_t co_clock_get (struct co_clock *o, int wait);

@@ -39,7 +39,7 @@ static int co_clock_worker (void *cookie)
 	return 0;
 }
 
-struct co_clock *co_clock_alloc (struct timespec *period)
+struct co_clock *co_clock_alloc (const struct timespec *period)
 {
 	struct co_clock *o;
 
