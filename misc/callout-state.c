@@ -27,7 +27,7 @@ struct co_state {
 	thrd_t worker;
 };
 
-static int co_worker (void *cookie)
+static int co_state_worker (void *cookie)
 {
 	struct co_state *o = cookie;
 	size_t now;
@@ -68,7 +68,7 @@ struct co_state *co_state_alloc (unsigned order, int count)
 
 	o->run = 1;
 
-	if (thrd_create (&o->worker, co_worker, o) != thrd_success)
+	if (thrd_create (&o->worker, co_state_worker, o) != thrd_success)
 		goto no_worker;
 
 	return o;
