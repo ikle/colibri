@@ -22,8 +22,6 @@ struct co_state {
 	mtx_t              queue_lock;
 
 	struct co_counter *counter;
-	mtx_t              counter_lock;
-
 	struct co_clock   *clock;
 
 	volatile int run;
@@ -35,8 +33,6 @@ static int co_worker (void *cookie)
 	struct co_state *o = cookie;
 	struct callout *co;
 
-	mtx_lock (&o->counter_lock);
-
 	while (o->run) {
 		mtx_lock (&o->queue_lock);
 
@@ -47,8 +43,6 @@ static int co_worker (void *cookie)
 
 		co_counter_run (o->counter, co_clock_get (o->clock, 1));
 	}
-
-	mtx_unlock (&o->counter_lock);
 
 	return 0;
 }
@@ -67,8 +61,6 @@ struct co_state *co_state_alloc (unsigned order, int count)
 	if ((o->counter = co_counter_alloc (0, order, count)) == NULL)
 		goto no_counter;
 
-	mtx_init (&o->counter_lock, 0);
-
 	if ((o->clock = co_clock_alloc (&period)) == NULL)
 		goto no_clock;
 
@@ -81,7 +73,6 @@ struct co_state *co_state_alloc (unsigned order, int count)
 no_worker:
 	co_clock_free (o->clock);
 no_clock:
-	mtx_destroy (&o->counter_lock);
 	co_counter_free (o->counter);
 no_counter:
 	mtx_destroy (&o->queue_lock);
@@ -100,8 +91,6 @@ void co_state_free (struct co_state *o)
 	thrd_join (o->worker, NULL);
 
 	co_clock_free (o->clock);
-
-	mtx_destroy (&o->counter_lock);
 	co_counter_free (o->counter);
 
 	mtx_destroy (&o->queue_lock);
