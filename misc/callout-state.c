@@ -11,6 +11,7 @@
 #include <colibri/data/seq.h>
 #include <colibri/threads.h>
 #include <colibri/time.h>
+#include <colibri/time/callout-clock.h>
 #include <colibri/time/callout-counter.h>
 #include <colibri/time/callout.h>
 
@@ -22,42 +23,17 @@ struct co_state {
 
 	struct co_counter *counter;
 	mtx_t              counter_lock;
-	cnd_t              signal;
+
+	struct co_clock   *clock;
 
 	volatile int run;
 	thrd_t worker;
 };
 
-static size_t get_ticks (void)
-{
-	struct timespec ts;
-
-	timespec_get (&ts, TIME_UTC);
-
-	return ts.tv_sec * 1000 + ts.tv_nsec / 1000000L;
-}
-
-static int co_clock (void *cookie)
-{
-	struct co_state *o = cookie;
-	struct timespec ts = {0, 1000000L};  /* 1kHz */
-
-	while (o->run) {
-		thrd_sleep (&ts, NULL);
-		cnd_broadcast (&o->signal);
-	}
-
-	return 0;
-}
-
 static int co_worker (void *cookie)
 {
 	struct co_state *o = cookie;
 	struct callout *co;
-	thrd_t clock;
-
-	if (thrd_create (&clock, co_clock, o) != thrd_success)
-		return 1;
 
 	mtx_lock (&o->counter_lock);
 
@@ -69,20 +45,18 @@ static int co_worker (void *cookie)
 
 		mtx_unlock (&o->queue_lock);
 
-		co_counter_run (o->counter, get_ticks ());
-		cnd_wait (&o->signal, &o->counter_lock);
+		co_counter_run (o->counter, co_clock_get (o->clock, 1));
 	}
 
 	mtx_unlock (&o->counter_lock);
 
-	thrd_join (clock, NULL);
 	return 0;
 }
 
 struct co_state *co_state_alloc (unsigned order, int count)
 {
+	const struct timespec period = {0, 1000000L};  /* 1ms */
 	struct co_state *o;
-	size_t now = get_ticks ();
 
 	if ((o = malloc (sizeof (*o))) == NULL)
 		return NULL;
@@ -90,11 +64,13 @@ struct co_state *co_state_alloc (unsigned order, int count)
 	callout_seq_init (&o->queue);
 	mtx_init (&o->queue_lock, 0);
 
-	if ((o->counter = co_counter_alloc (now, order, count)) == NULL)
+	if ((o->counter = co_counter_alloc (0, order, count)) == NULL)
 		goto no_counter;
 
 	mtx_init (&o->counter_lock, 0);
-	cnd_init (&o->signal);
+
+	if ((o->clock = co_clock_alloc (&period)) == NULL)
+		goto no_clock;
 
 	o->run = 1;
 
@@ -103,7 +79,8 @@ struct co_state *co_state_alloc (unsigned order, int count)
 
 	return o;
 no_worker:
-	cnd_destroy (&o->signal);
+	co_clock_free (o->clock);
+no_clock:
 	mtx_destroy (&o->counter_lock);
 	co_counter_free (o->counter);
 no_counter:
@@ -122,7 +99,8 @@ void co_state_free (struct co_state *o)
 	o->run = 0;
 	thrd_join (o->worker, NULL);
 
-	cnd_destroy (&o->signal);
+	co_clock_free (o->clock);
+
 	mtx_destroy (&o->counter_lock);
 	co_counter_free (o->counter);
 
@@ -138,7 +116,7 @@ void co_state_free (struct co_state *o)
 
 void callout_schedule (struct co_state *o, struct callout *co, size_t timeout)
 {
-	co->time = get_ticks () + timeout;
+	co->time = co_clock_get (o->clock, 0) + timeout;
 
 	mtx_lock (&o->queue_lock);
 
