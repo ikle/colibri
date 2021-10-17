@@ -48,13 +48,15 @@ void mailbox_free (struct mailbox *o)
 	free (o);
 }
 
-void mailbox_write (struct mailbox *o, struct message *m)
+int mailbox_write (struct mailbox *o, struct message *m)
 {
 	mtx_lock (&o->lock);
 
 	message_seq_enqueue (&o->queue, m);
 
 	mtx_unlock (&o->lock);
+
+	return 1;
 }
 
 struct message *mailbox_read (struct mailbox *o, int wait)

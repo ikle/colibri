@@ -20,7 +20,7 @@ typedef void message_free (struct message *m);
 struct mailbox *mailbox_alloc (message_free *free);
 void mailbox_free (struct mailbox *o);
 
-void mailbox_write (struct mailbox *o, struct message *m);
+int mailbox_write (struct mailbox *o, struct message *m);
 struct message *mailbox_read (struct mailbox *o, int wait);
 
 #endif  /* COLIBRI_SYNC_MAILBOX_H */
