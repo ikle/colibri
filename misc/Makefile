@@ -8,3 +8,4 @@ LIBREV	= 0.1
 include ../make-core.mk
 
 callout-clock-test: LDFLAGS += -pthread
+mailbox-test: LDFLAGS += -pthread
