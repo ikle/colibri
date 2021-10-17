@@ -76,11 +76,11 @@ static struct mailbox *test_mailbox_alloc (int limit)
 
 static int writer_worker (void *cookie)
 {
-	const struct timespec period = {0, 50000000L};  /* 50ms */
+	const struct timespec period = {0, 30000000L};  /* 30ms */
 	struct mailbox *mb = cookie;
 	size_t i;
 
-	for (i = 1; i <= 10; ++i) {
+	for (i = 1; i <= 20; ++i) {
 		if (!test_message_write (i, mb, 1))
 			fprintf (stderr, "W: cannot write %zu to mailbox\n", i);
 		else
@@ -99,7 +99,7 @@ static int reader_worker (void *cookie)
 	size_t i;
 	int id;
 
-	for (i = 0; i < 10; ++i) {
+	for (i = 0; i < 20; ++i) {
 		if ((id = test_message_read (mb, 1)) == 0)
 			fprintf (stderr, "W: cannot read from mailbox\n");
 		else
@@ -116,7 +116,7 @@ int main (int argc, char *argv[])
 	struct mailbox *mb;
 	thrd_t writer, reader;
 
-	if ((mb = test_mailbox_alloc (10)) == NULL) {
+	if ((mb = test_mailbox_alloc (7)) == NULL) {
 		perror ("E: cannot create mailbox");
 		return 1;
 	}
