@@ -48,7 +48,7 @@ void mailbox_free (struct mailbox *o)
 	free (o);
 }
 
-void mailbox_send (struct mailbox *o, struct message *m)
+void mailbox_write (struct mailbox *o, struct message *m)
 {
 	mtx_lock (&o->lock);
 
@@ -57,7 +57,7 @@ void mailbox_send (struct mailbox *o, struct message *m)
 	mtx_unlock (&o->lock);
 }
 
-struct message *mailbox_recv (struct mailbox *o, int wait)
+struct message *mailbox_read (struct mailbox *o, int wait)
 {
 	struct message *m;
 
