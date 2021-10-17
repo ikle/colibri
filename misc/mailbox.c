@@ -67,7 +67,7 @@ struct message *mailbox_read (struct mailbox *o, int wait)
 
 	m = message_seq_dequeue (&o->queue);
 
-	if (m == NULL && wait) {
+	while (m == NULL && wait) {
 		cnd_wait (&o->signal, &o->lock);
 		m = message_seq_dequeue (&o->queue);
 	}
