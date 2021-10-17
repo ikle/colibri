@@ -56,6 +56,7 @@ int mailbox_write (struct mailbox *o, struct message *m)
 
 	mtx_unlock (&o->lock);
 
+	cnd_signal (&o->signal);
 	return 1;
 }
 
