@@ -15,6 +15,11 @@ struct message {
 	struct message *next;
 };
 
+static inline void message_init (struct message *o)
+{
+	o->next = NULL;
+}
+
 typedef void message_free (struct message *m);
 
 struct mailbox *mailbox_alloc (int limit, message_free *free);
