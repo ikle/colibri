@@ -9,7 +9,7 @@
 #include <stdlib.h>
 
 #include <colibri/data/seq.h>
-#include <colibri/mailbox.h>
+#include <colibri/sync/mailbox.h>
 #include <colibri/threads.h>
 
 SEQ_DECLARE (message)
