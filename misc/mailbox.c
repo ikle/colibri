@@ -48,16 +48,31 @@ void mailbox_free (struct mailbox *o)
 	free (o);
 }
 
+static int mailbox_write_locked (struct mailbox *o, struct message *m)
+{
+	message_seq_enqueue (&o->queue, m);
+	return 1;
+}
+
 int mailbox_write (struct mailbox *o, struct message *m)
 {
+	int ok;
+
 	mtx_lock (&o->lock);
 
-	message_seq_enqueue (&o->queue, m);
+	ok = mailbox_write_locked (o, m);
 
 	mtx_unlock (&o->lock);
 
-	cnd_signal (&o->signal);
-	return 1;
+	if (ok)
+		cnd_signal (&o->signal);
+
+	return ok;
+}
+
+static struct message *mailbox_read_locked (struct mailbox *o)
+{
+	return message_seq_dequeue (&o->queue);
 }
 
 struct message *mailbox_read (struct mailbox *o, int wait)
@@ -66,11 +81,11 @@ struct message *mailbox_read (struct mailbox *o, int wait)
 
 	mtx_lock (&o->lock);
 
-	m = message_seq_dequeue (&o->queue);
+	m = mailbox_read_locked (o);
 
 	while (m == NULL && wait) {
 		cnd_wait (&o->signal, &o->lock);
-		m = message_seq_dequeue (&o->queue);
+		m = mailbox_read_locked (o);
 	}
 
 	mtx_unlock (&o->lock);
