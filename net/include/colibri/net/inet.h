@@ -9,8 +9,6 @@
 #ifndef COLIBRI_NET_INET_H
 #define COLIBRI_NET_INET_H  1
 
-#include <netinet/in.h>
-
 #include <colibri/net/ipv4.h>
 #include <colibri/net/ipv6.h>
 
