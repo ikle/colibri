@@ -1,7 +1,7 @@
 /*
  * Colibri JSON API
  *
- * Copyright (c) 2018-2021 Alexei A. Smekalkine <ikle@ikle.ru>
+ * Copyright (c) 2018-2022 Alexei A. Smekalkine <ikle@ikle.ru>
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -14,5 +14,7 @@
 
 #include <colibri/data/json-input.h>
 #include <colibri/data/json-output.h>
+
+struct json *json_merge (struct json *a, struct json *b);
 
 #endif  /* COLIBRI_DATA_JSON_H */

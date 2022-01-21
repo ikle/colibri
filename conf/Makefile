@@ -3,7 +3,7 @@ URL = https://github.com/ikle/colibri
 
 LIBNAME	= colibri-conf
 LIBVER	= 0
-LIBREV	= 0.3
+LIBREV	= 0.4
 
 DEPENDS = glib-2.0 json-c
 
