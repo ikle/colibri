@@ -1,7 +1,7 @@
 /*
  * Colibri JSON dictionary API
  *
- * Copyright (c) 2018-2021 Alexei A. Smekalkine <ikle@ikle.ru>
+ * Copyright (c) 2018-2022 Alexei A. Smekalkine <ikle@ikle.ru>
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -16,7 +16,7 @@ int json_dict_exists (struct json *o, const char *key);
 struct json *json_dict_get        (struct json *o, const char *key);
 int          json_dict_get_bool   (struct json *o, const char *key);
 int          json_dict_get_int    (struct json *o, const char *key);
-double       json_dict_get_number (struct json *o, const char *key);
+double       json_dict_get_float  (struct json *o, const char *key);
 const char  *json_dict_get_string (struct json *o, const char *key);
 
 struct json *json_dict_get_list (struct json *o, const char *key);

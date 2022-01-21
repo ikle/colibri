@@ -1,7 +1,7 @@
 /*
  * Colibri JSON dictionary API helpers
  *
- * Copyright (c) 2018-2021 Alexei A. Smekalkine <ikle@ikle.ru>
+ * Copyright (c) 2018-2022 Alexei A. Smekalkine <ikle@ikle.ru>
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -28,7 +28,7 @@ int json_dict_get_int (struct json *o, const char *key)
 	return json_get_int (node);
 }
 
-double json_dict_get_number (struct json *o, const char *key)
+double json_dict_get_float (struct json *o, const char *key)
 {
 	struct json *node;
 
