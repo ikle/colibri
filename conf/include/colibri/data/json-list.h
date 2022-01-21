@@ -28,4 +28,7 @@ int json_list_set_int    (struct json *o, int i, int value);
 int json_list_set_float  (struct json *o, int i, double value);
 int json_list_set_string (struct json *o, int i, const char *value);
 
+struct json *json_list_set_list (struct json *o, int i, int size);
+struct json *json_list_set_dict (struct json *o, int i);
+
 #endif  /* COLIBRI_DATA_JSON_LIST_H */
