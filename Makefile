@@ -3,4 +3,4 @@ URL = https://github.com/ikle/colibri
 
 CHILDS	= conf net misc sys
 
-include make-core.mk
+include make-childs.mk

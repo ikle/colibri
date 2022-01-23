@@ -8,3 +8,4 @@ LIBREV	= 0.1
 LDFLAGS += -lpam
 
 include ../make-core.mk
+include ../make-doc.mk

@@ -5,6 +5,9 @@
 *.swp
 *-test
 
+*.ok
+sysroot
+
 */doc/db
 */doc/html
 */doc/*.stamp

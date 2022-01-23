@@ -1,7 +1,7 @@
 #
-# Generic make helpers
+# Colibri Build System
 #
-# Copyright (c) 2006-2020 Alexei A. Smekalkine <ikle@ikle.ru>
+# Copyright (c) 2006-2022 Alexei A. Smekalkine <ikle@ikle.ru>
 #
 # SPDX-License-Identifier: BSD-2-Clause
 #
@@ -22,6 +22,10 @@ DESTDIR	?=
 #
 
 ifneq ($(DEPENDS),)
+ifneq ($(SYSROOT),)
+CFLAGS	+= `pkg-config --define-prefix $(DEPENDS) --cflags`
+LDFLAGS	+= `pkg-config --define-prefix $(DEPENDS) --libs`
+endif
 CFLAGS	+= `pkg-config $(DEPENDS) --cflags`
 LDFLAGS	+= `pkg-config $(DEPENDS) --libs`
 endif
@@ -38,35 +42,13 @@ all:
 # source and target file filters
 #
 
-HEADERS	= $(wildcard include/*.h include/*/*.h)
+HEADERS	= $(wildcard include/*.h include/*/*.h include/*/*/*.h)
 SOURCES	= $(filter-out %-test.c %-tool.c %-service.c, $(wildcard *.c))
 OBJECTS	= $(patsubst %.c,%.o, $(SOURCES))
 
 TESTS	= $(patsubst %-test.c,%-test, $(wildcard *-test.c))
 TOOLS	= $(patsubst %-tool.c,%, $(wildcard *-tool.c))
 SERVICES = $(patsubst %-service.c,%, $(wildcard *-service.c))
-
-#
-# rules to manage subprojects
-#
-
-ifneq ($(CHILDS),)
-
-all:       build-childs
-clean:     clean-childs
-install: install-childs
-doc:         doc-childs
-
-define declare-child
-build-childs::   ; make -C $(1)
-clean-childs::   ; make -C $(1) clean
-install-childs:: ; make -C $(1) install
-doc-childs::     ; make -C $(1) doc
-endef
-
-$(foreach F,$(CHILDS),$(eval $(call declare-child,$(F))))
-
-endif  # CHILDS
 
 #
 # rules to manage static libraries
@@ -101,37 +83,24 @@ install: install-static
 $(OBJECTS): CFLAGS += -I$(CURDIR)/include
 
 $(PCFILE):
-	@test -n "$(DESCRIPTION)" && echo "Description: $(DESCRIPTION)"	>  $@
+	@echo "prefix=$(PREFIX)"					>  $@
+	@echo "includedir=\$${prefix}$(INCDIR:$(PREFIX)%=%)"		>> $@
+	@echo "libdir=\$${prefix}$(LIBDIR:$(PREFIX)%=%)"		>> $@
+	@echo								>> $@
+	@test -n "$(DESCRIPTION)" && echo "Description: $(DESCRIPTION)"	>> $@
 	@test -n "$(URL)" && echo "URL: $(URL)"		>> $@
 	@echo "Name: $(LIBNAME)"			>> $@
 	@echo "Version: $(LIBVER).$(LIBREV)"		>> $@
 ifneq ($(DEPENDS),)
 	@echo "Requires: $(DEPENDS)"			>> $@
 endif
-	@echo "Libs: -l$(LIBNAME)"			>> $@
-	@echo "Cflags: -I$(INCROOT)"			>> $@
+	@echo "Libs: -L\$${libdir} -l$(LIBNAME)"			>> $@
+	@echo "Cflags: -I\$${includedir}$(INCROOT:$(INCDIR)%=%)"	>> $@
 
 install-static: $(AFILE) $(PCFILE)
 	install -d $(DESTDIR)$(LIBDIR)/pkgconfig
 	install -m 644 $(AFILE) $(DESTDIR)$(LIBDIR)
 	install -m 644 $(PCFILE) $(DESTDIR)$(LIBDIR)/pkgconfig
-
-.PHONY: build-doc clean-doc
-
-doc: build-doc
-
-build-doc:
-	mkdir -p doc/html
-	gtkdoc-scan --module=$(LIBNAME) \
-		--source-dir=. --output-dir=doc/db --rebuild-sections
-	(cd doc/db && gtkdoc-mkdb --module=$(LIBNAME) --source-dir=$(CURDIR))
-	(cd doc/html && \
-	gtkdoc-mkhtml $(LIBNAME) $(CURDIR)/doc/db/$(LIBNAME)-docs.xml)
-
-clean: clean-doc
-
-clean-doc:
-	rm -rf doc/db doc/html doc/*.stamp
 
 else  # not defined LIBNAME
 
