@@ -8,4 +8,3 @@ LIBREV	= 0.4
 DEPENDS = glib-2.0 json-c
 
 include ../make-core.mk
-include ../make-doc.mk
