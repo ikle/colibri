@@ -8,39 +8,37 @@
 
 #include <colibri/data/json.h>
 
-#define json_bool  json_bool_impl
-#define json_type  json_type_impl
-
-#include <json-c/json.h>
-
-#undef json_bool
-#undef json_type
-
 static struct json *json_dict_merge (struct json *a, struct json *b)
 {
-	struct json *o, *v;
-	struct json_object_iter it;
+	struct json *o, *v, *val;
+	struct json_entry *e;
+	const char *key;
 
 	if ((o = json_dict ()) == NULL)
 		return NULL;
 
-	json_object_object_foreachC ((void *) a, it) {
-		if (json_dict_get (b, it.key) != NULL)
+	for (e = json_dict_list (a); e != NULL; e = json_entry_next (e)) {
+		key = json_entry_key (e);
+
+		if (json_dict_get (b, key) != NULL)
 			continue;
 
-		v = json_merge (NULL, (void *) it.val);
+		v = json_merge (NULL, json_entry_get (e));
 
-		if (!json_dict_set (o, it.key, v))
+		if (!json_dict_set (o, key, v))
 			goto error;
 	}
 
-	json_object_object_foreachC ((void *) b, it) {
-		v = json_merge (json_dict_get (a, it.key), (void *) it.val);
+	for (e = json_dict_list (b); e != NULL; e = json_entry_next (e)) {
+		key = json_entry_key (e);
+		val = json_entry_get (e);
 
-		if (v == NULL && it.val != NULL)
+		v = json_merge (json_dict_get (a, key), val);
+
+		if (v == NULL && val != NULL)
 			goto error;
 
-		if (!json_dict_set (o, it.key, v))
+		if (!json_dict_set (o, key, v))
 			goto error;
 	}
 
