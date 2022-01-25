@@ -28,7 +28,7 @@ static struct json *json_dict_merge (struct json *a, struct json *b)
 		if (json_dict_get (b, it.key) != NULL)
 			continue;
 
-		e = json_merge ((void *) it.val, NULL);
+		e = json_merge (NULL, (void *) it.val);
 
 		if (!json_dict_set (o, it.key, e))
 			goto error;
