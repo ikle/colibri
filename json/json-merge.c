@@ -18,7 +18,7 @@
 
 static struct json *json_dict_merge (struct json *a, struct json *b)
 {
-	struct json *o, *e;
+	struct json *o, *v;
 	struct json_object_iter it;
 
 	if ((o = json_dict ()) == NULL)
@@ -28,25 +28,25 @@ static struct json *json_dict_merge (struct json *a, struct json *b)
 		if (json_dict_get (b, it.key) != NULL)
 			continue;
 
-		e = json_merge (NULL, (void *) it.val);
+		v = json_merge (NULL, (void *) it.val);
 
-		if (!json_dict_set (o, it.key, e))
+		if (!json_dict_set (o, it.key, v))
 			goto error;
 	}
 
 	json_object_object_foreachC ((void *) b, it) {
-		e = json_merge (json_dict_get (a, it.key), (void *) it.val);
+		v = json_merge (json_dict_get (a, it.key), (void *) it.val);
 
-		if (e == NULL && it.val != NULL)
+		if (v == NULL && it.val != NULL)
 			goto error;
 
-		if (!json_dict_set (o, it.key, e))
+		if (!json_dict_set (o, it.key, v))
 			goto error;
 	}
 
 	return o;
 error:
-	json_put (e);
+	json_put (v);
 	json_put (o);
 	return NULL;
 }
