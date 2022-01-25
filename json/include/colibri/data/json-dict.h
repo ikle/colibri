@@ -33,4 +33,10 @@ struct json *json_dict_set_dict (struct json *o, const char *key);
 
 void json_dict_remove (struct json *o, const char *key);
 
+struct json_entry *json_dict_list (struct json *o);
+struct json_entry *json_entry_next (struct json_entry *o);
+
+const char  *json_entry_key (struct json_entry *o);
+struct json *json_entry_get (struct json_entry *o);
+
 #endif  /* COLIBRI_DATA_JSON_DICT_H */
