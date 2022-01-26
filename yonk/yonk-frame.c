@@ -27,6 +27,7 @@ static struct json *json_load (const char *from)
 		goto no_in;
 
 	o = json_read (in);
+	json_input_close (in);
 	fclose (f);
 	return o;
 no_in:
