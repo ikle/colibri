@@ -14,27 +14,6 @@
 #include <colibri/text/string.h>
 #include <yonk/conf.h>
 
-static struct json *json_load (const char *from)
-{
-	FILE *f;
-	struct json_input *in;
-	struct json *o;
-
-	if ((f = fopen (from, "r")) == NULL)
-		return NULL;
-
-	if ((in = json_input_open (NULL, f)) == NULL)
-		goto no_in;
-
-	o = json_read (in);
-	json_input_close (in);
-	fclose (f);
-	return o;
-no_in:
-	fclose (f);
-	return NULL;
-}
-
 static int yonk_unroll_one (struct json *o, const char *root)
 {
 	struct json *list, *body, *dopant;
