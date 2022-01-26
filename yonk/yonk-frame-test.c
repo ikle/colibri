@@ -13,7 +13,6 @@
 int main (int argc, char *argv[])
 {
 	struct json *frame;
-	struct json_output *out;
 
 	if (argc != 2) {
 		fprintf (stderr, "usage:\n\t"
@@ -26,15 +25,13 @@ int main (int argc, char *argv[])
 		return 1;
 	}
 
-	if ((out = json_output_open (NULL, stdout)) == NULL) {
+	if (!json_save (frame, NULL)) {
 		perror ("E: cannot output JSON template");
 		return 1;
 	}
 
-	json_write (out, frame);
 	printf ("\n");
 
-	json_output_close (out);
 	json_put (frame);
 	return 0;
 }
